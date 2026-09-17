@@ -1,1 +1,203 @@
-<!doctype html><html lang="pt"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#0f766e"><meta name="description" content="Encontre serviços locais em Moçambique"><link rel="manifest" href="manifest.webmanifest"><link rel="stylesheet" href="styles.css"><title>MãoCerta MZ</title></head><body><header><div class="brand"><b>MC</b><div><small>MOÇAMBIQUE</small><h1>MãoCerta MZ</h1></div></div><button id="install" class="outline hidden">Instalar app</button></header><main><section class="hero"><div><span class="badge">Encontre quem resolve</span><h2>Serviços locais perto de si.</h2><p>Encontre profissionais de confiança em Maputo e Matola e contacte-os diretamente pelo WhatsApp.</p></div><div class="filters"><label>O que procura?<input id="search" placeholder="Ex: eletricista"></label><label>Cidade<select id="city"><option value="">Todas</option><option>Maputo</option><option>Matola</option></select></label><label>Categoria<select id="category"><option value="">Todas</option></select></label></div></section><section class="stats"><div><strong id="count">0</strong><span>profissionais</span></div><div><strong>8</strong><span>categorias</span></div><div><strong>24/7</strong><span>contacto</span></div></section><div class="heading"><div><small>CATÁLOGO LOCAL</small><h2>Prestadores em destaque</h2></div><button id="add" class="primary">Adicionar prestador</button></div><section id="cards" class="grid"></section><section class="how"><h2>Como funciona</h2><div class="steps"><article><b>1</b><h3>Procure</h3><p>Filtre por serviço, cidade ou bairro.</p></article><article><b>2</b><h3>Contacte</h3><p>Fale diretamente pelo WhatsApp.</p></article><article><b>3</b><h3>Combine</h3><p>Defina preço e horário com o profissional.</p></article></div></section></main><dialog id="dialog"><form id="form"><button type="button" id="close" class="x">×</button><h2>Cadastrar prestador</h2><p class="muted">O anúncio será guardado neste dispositivo para esta versão inicial.</p><div class="formgrid"><label>Nome<input name="name" required></label><label>Categoria<select name="category" id="formCategory" required></select></label><label>Cidade<select name="city" required><option value="">Selecione</option><option>Maputo</option><option>Matola</option></select></label><label>Bairro<input name="bairro" required></label><label>Telefone<input name="phone" placeholder="84 000 0000" required></label><label>Preço<input name="price" placeholder="A partir de 500 MT" required></label><label class="wide">Descrição<textarea name="description" rows="3" required></textarea></label></div><div class="actions"><button type="button" id="cancel" class="secondary">Cancelar</button><button class="primary">Guardar</button></div></form></dialog><script src="app.js"></script></body></html>
+<!doctype html>
+<html lang="pt">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#0f766e" />
+    <meta name="description" content="MãoCerta MZ — marketplace local de serviços em Moçambique" />
+    <link rel="manifest" href="manifest.webmanifest" />
+    <link rel="stylesheet" href="styles.css" />
+    <title>MãoCerta MZ</title>
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <div class="brand-wrap">
+          <div class="brand-mark">MC</div>
+          <div>
+            <small>MOÇAMBIQUE</small>
+            <h1>MãoCerta MZ</h1>
+          </div>
+        </div>
+        <div class="top-actions">
+          <button id="adminToggle" class="secondary-btn">Painel admin</button>
+          <button id="installBtn" class="ghost-btn hidden">Instalar app</button>
+        </div>
+      </header>
+
+      <main>
+        <section id="publicView" class="view-panel">
+          <div class="hero">
+            <div class="hero-copy">
+              <span class="badge">Encontre quem resolve</span>
+              <h2>Serviços locais perto de si.</h2>
+              <p>
+                Encontre eletricistas, canalizadores, limpeza, pedreiros, reparação de telemóveis e muito mais.
+                Tudo em um só lugar, com contacto direto pelo WhatsApp.
+              </p>
+            </div>
+
+            <div class="filter-panel">
+              <label>
+                <span>Busca</span>
+                <input id="searchInput" type="text" placeholder="Ex: eletricista, limpeza..." />
+              </label>
+              <label>
+                <span>Cidade</span>
+                <select id="cityFilter">
+                  <option value="">Todas</option>
+                  <option value="Maputo">Maputo</option>
+                  <option value="Matola">Matola</option>
+                </select>
+              </label>
+              <label>
+                <span>Categoria</span>
+                <select id="categoryFilter">
+                  <option value="">Todas</option>
+                </select>
+              </label>
+            </div>
+          </div>
+
+          <section class="stats-grid">
+            <article>
+              <strong id="totalProviders">0</strong>
+              <span>Prestadores</span>
+            </article>
+            <article>
+              <strong id="featuredCount">0</strong>
+              <span>Destaques</span>
+            </article>
+            <article>
+              <strong>24/7</strong>
+              <span>Contacto</span>
+            </article>
+          </section>
+
+          <div class="section-head">
+            <div>
+              <small>CATÁLOGO LOCAL</small>
+              <h3>Prestadores em destaque</h3>
+            </div>
+            <button id="openAddProvider" class="primary-btn">Adicionar prestador</button>
+          </div>
+
+          <section id="providerGrid" class="provider-grid"></section>
+
+          <section class="how-it-works">
+            <h3>Como funciona</h3>
+            <div class="steps-grid">
+              <article>
+                <span>1</span>
+                <h4>Procure</h4>
+                <p>Encontre o serviço certo para a sua cidade ou bairro.</p>
+              </article>
+              <article>
+                <span>2</span>
+                <h4>Contacte</h4>
+                <p>Abre o WhatsApp e conversa diretamente com o prestador.</p>
+              </article>
+              <article>
+                <span>3</span>
+                <h4>Combine</h4>
+                <p>Defina preço, horário e condições antes do serviço.</p>
+              </article>
+            </div>
+          </section>
+        </section>
+
+        <section id="adminView" class="view-panel hidden">
+          <div class="admin-header">
+            <div>
+              <small>PANEL ADMIN</small>
+              <h3>Gestão de prestadores</h3>
+            </div>
+            <button id="backToPublic" class="secondary-btn">Voltar</button>
+          </div>
+
+          <div class="admin-summary">
+            <article>
+              <strong id="adminTotal">0</strong>
+              <span>Total</span>
+            </article>
+            <article>
+              <strong id="adminFeatured">0</strong>
+              <span>Destaques</span>
+            </article>
+            <article>
+              <strong id="adminCities">0</strong>
+              <span>Cidades</span>
+            </article>
+          </div>
+
+          <div class="admin-table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Nome</th>
+                  <th>Categoria</th>
+                  <th>Cidade</th>
+                  <th>Preço</th>
+                  <th>Destaque</th>
+                  <th>Ações</th>
+                </tr>
+              </thead>
+              <tbody id="adminTableBody"></tbody>
+            </table>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <dialog id="providerDialog">
+      <form id="providerForm">
+        <div class="dialog-header">
+          <h3>Cadastrar prestador</h3>
+          <button type="button" id="closeDialog" class="icon-close" aria-label="Fechar">×</button>
+        </div>
+
+        <div class="form-grid">
+          <label>
+            <span>Nome</span>
+            <input name="name" type="text" required placeholder="Ex: José Mário" />
+          </label>
+          <label>
+            <span>Categoria</span>
+            <select name="category" id="formCategory" required></select>
+          </label>
+          <label>
+            <span>Cidade</span>
+            <select name="city" required>
+              <option value="">Selecione</option>
+              <option value="Maputo">Maputo</option>
+              <option value="Matola">Matola</option>
+            </select>
+          </label>
+          <label>
+            <span>Bairro</span>
+            <input name="bairro" type="text" required placeholder="Ex: Polana Cimento" />
+          </label>
+          <label>
+            <span>Telefone</span>
+            <input name="phone" type="tel" required placeholder="84 123 4567" />
+          </label>
+          <label>
+            <span>Preço</span>
+            <input name="price" type="text" required placeholder="A partir de 500 MT" />
+          </label>
+          <label class="full-width">
+            <span>Descrição</span>
+            <textarea name="description" rows="3" required placeholder="Descreva o serviço..."></textarea>
+          </label>
+        </div>
+
+        <div class="dialog-actions">
+          <button type="button" id="cancelDialog" class="secondary-btn">Cancelar</button>
+          <button type="submit" class="primary-btn">Guardar</button>
+        </div>
+      </form>
+    </dialog>
+
+    <script src="app.js"></script>
+  </body>
+</html>
